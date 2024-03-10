@@ -1,0 +1,34 @@
+name: Simple E2E Workflow - Three Env
+
+on:
+	workflow_dispatch:
+
+jobs:
+	DEV:
+		runs-on: ubuntu-latest
+		environment: DEV
+		steps:
+			- uses: actions/checkout@v2
+			- name: Run a script
+				run: |
+				echo 'Ejecutando trabajo en entorno DEV'
+
+	QA:
+		runs-on: ubuntu-latest
+		environment: QA
+		needs: DEV
+		steps:
+			- uses: actions/checkout@v2
+			- name: Run a script
+				run: |
+				echo 'Ejecutando trabajo en entorno QA'
+
+	PRD:
+		runs-on: ubuntu-latest
+		environment: PRD
+		needs: QA
+		steps:
+			- uses: actions/checkout@v2
+			- name: Run a script
+				run: |
+				echo 'Ejecutando trabajo en entorno PRD'
